@@ -50,15 +50,25 @@
         var win="";
         var img = document.createElement("img"); 
  
-        img.src = "cheer-happy.gif"; 
-     
-        
-    function selectBtn(row,col)
-    {
-        var btns=[[document.getElementById("b00"),document.getElementById("b01"),document.getElementById("b02")],
+        img.src = "cheer-happy.gif";
+        var btns; 
+     function getAllButtonRefrences()
+     {
+         btns=[[document.getElementById("b00"),document.getElementById("b01"),document.getElementById("b02")],
         [document.getElementById("b10"),document.getElementById("b11"),document.getElementById("b12")],
         [document.getElementById("b20"),document.getElementById("b21"),document.getElementById("b22")]
         ];
+     }
+     function winnerColor(b1,b2,b3)
+    {
+        b1.style.backgroundColor="green";
+        b2.style.backgroundColor="green";
+        b3.style.backgroundColor="green";
+     }
+
+      
+    function selectBtn(row,col)
+    {
     if(currentPlayer==1)
     {
         document.getElementById("turn").innerHTML=player2Symbol;
@@ -79,52 +89,57 @@
     }
     function checkWinner()
     {
-        var btns=[[document.getElementById("b00"),document.getElementById("b01"),document.getElementById("b02")],
-        [document.getElementById("b10"),document.getElementById("b11"),document.getElementById("b12")],
-        [document.getElementById("b20"),document.getElementById("b21"),document.getElementById("b22")]
-        ];
         //check horizontally
         if(boxtext[0][0]!=""&&boxtext[0][0]==boxtext[0][1]&&boxtext[0][1]==boxtext[0][2])
         {
             document.getElementById("win").innerHTML=boxtext[0][0];
             win=boxtext[0][0];
+            winnerColor(btns[0][0],btns[0][1],btns[0][2]);
         }
         else if(boxtext[1][0]!=""&&boxtext[1][0]==boxtext[1][1]&&boxtext[1][1]==boxtext[1][2])
         {
             document.getElementById("win").innerHTML=boxtext[1][0];
             win=boxtext[1][0];
+            winnerColor(btns[1][0],btns[1][1],btns[1][2]);
+            
         }
         else if(boxtext[2][0]!=""&&boxtext[2][0]==boxtext[2][1]&&boxtext[2][1]==boxtext[2][2])
         {
             document.getElementById("win").innerHTML=boxtext[2][0];
             win=boxtext[2][0];
+            winnerColor(btns[2][0],btns[2][1],btns[2][2]);
         }        
         //check vertically
         else if(boxtext[0][0]!=""&&boxtext[0][0]==boxtext[1][0]&&boxtext[1][0]==boxtext[2][0])
         {
             document.getElementById("win").innerHTML=boxtext[0][0];
             win=boxtext[0][0];
+            winnerColor(btns[0][0],btns[1][0],btns[2][0]);
         }
         else if(boxtext[0][1]!=""&&boxtext[0][1]==boxtext[1][1]&&boxtext[1][1]==boxtext[2][1])
         {
             document.getElementById("win").innerHTML=boxtext[0][1];
             win=boxtext[0][1];
+            winnerColor(btns[0][1],btns[1][1],btns[2][1]);
         }
         else if(boxtext[0][2]!=""&&boxtext[0][2]==boxtext[1][2]&&boxtext[1][2]==boxtext[2][2])
         {
             document.getElementById("win").innerHTML=boxtext[0][2];
             win=boxtext[0][2];
+            winnerColor(btns[0][2],btns[1][2],btns[2][2]);
         }
         //check diagonally
         else if(boxtext[0][2]!=""&&boxtext[0][2]==boxtext[1][1]&&boxtext[1][1]==boxtext[2][0])
         {
             document.getElementById("win").innerHTML=boxtext[0][2];
             win=boxtext[0][2];
+            winnerColor(btns[0][2],btns[1][1],btns[2][0]);
         }
         else if(boxtext[0][0]!=""&&boxtext[0][0]==boxtext[1][1]&&boxtext[1][1]==boxtext[2][2])
         {
             document.getElementById("win").innerHTML=boxtext[0][0];
             win=boxtext[0][0];
+            winnerColor(btns[0][0],btns[1][1],btns[2][1]);
         }
         if(win==="X"||win=="O")
         {
@@ -151,10 +166,17 @@
     }
     function reset()
     {
-        var btns=[[document.getElementById("b00"),document.getElementById("b01"),document.getElementById("b02")],
-        [document.getElementById("b10"),document.getElementById("b11"),document.getElementById("b12")],
-        [document.getElementById("b20"),document.getElementById("b21"),document.getElementById("b22")]
-        ];
+        //reset all buttons colors
+        btns[0][0].style.backgroundColor="blue";
+        btns[0][1].style.backgroundColor="blue";
+        btns[0][2].style.backgroundColor="blue";
+        btns[1][0].style.backgroundColor="blue";
+        btns[1][1].style.backgroundColor="blue";
+        btns[1][2].style.backgroundColor="blue";
+        btns[2][0].style.backgroundColor="blue";
+        btns[2][1].style.backgroundColor="blue";
+        btns[2][2].style.backgroundColor="blue";
+        //
         btns[0][0].innerHTML="";
         btns[0][1].innerHTML="";
         btns[0][2].innerHTML="";
@@ -165,17 +187,15 @@
         btns[2][1].innerHTML="";
         btns[2][2].innerHTML="";
         //enable the disabled button 
-        btns[0][0].disabled="false";
-        btns[0][1].disabled="false";
-        btns[0][2].disabled="false";
-        btns[1][0].disabled="false";
-        btns[1][1].disabled="false";
-        btns[1][2].disabled="false";
-        btns[2][0].disabled="false";
-        btns[2][1].disabled="false";
-        btns[2][2].disabled="false";
-        
-        document.getElementById("b01").disabled="false";
+        btns[0][0].disabled=false;
+        btns[0][1].disabled=false;
+        btns[0][2].disabled=false;
+        btns[1][0].disabled=false;
+        btns[1][1].disabled=false;
+        btns[1][2].disabled=false;
+        btns[2][0].disabled=false;
+        btns[2][1].disabled=false;
+        btns[2][2].disabled=false;
         boxtext=[
             ["","",""],
             ["","",""],
@@ -191,7 +211,7 @@
     </script>
 
 </head>
-<body>
+<body onload="getAllButtonRefrences();">
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12 text-center bg bg-primary text-white">
